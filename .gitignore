@@ -1,0 +1,22 @@
+# Large data files
+data/raw/**
+data/processed/**
+results/*.rds
+results/*.RDS
+plots/**
+!plots/
+
+# R environment
+.RData
+.Rhistory
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.Rproj.user/
+.vscode/
+.idea/
+__pycache__/
+*.pyc
