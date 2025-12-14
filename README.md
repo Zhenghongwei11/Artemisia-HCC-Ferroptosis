@@ -2,7 +2,7 @@
 
 **Network Pharmacology and Molecular Mechanism Study**
 
-> This is a comprehensive reproducible analysis package for the manuscript submitted to high-impact journals (IF 5-7)
+> 📄 **Reproducible analysis package for peer review** - Contains all scripts, data, and figures for independent verification of the manuscript analysis.
 
 ---
 
@@ -18,45 +18,19 @@ A systematic network pharmacology investigation revealing how Artemisia capillar
 
 ---
 
-## 📊 Study Workflow
+## 📊 Study Workflow & Key Figures
 
-![Study Flowchart](plots/publication/figure1.jpeg)
+**For detailed figure visualization**, please download the repository and view:
+- High-resolution figures in `plots/publication/` (PNG, PDF, TIFF formats)
+- Figure legends and specifications in `plots/publication/README_figures.md`
 
-**Figure 1:** Comprehensive research design integrating network pharmacology, DEG analysis, prognostic modeling, and molecular validation
-
----
-
-## 🔬 Key Figures
-
-### Figure 2: Differential Expression & Hub Gene Identification
-![DEG Analysis](plots/publication/Figure2_DEG_analysis.png)
-- Volcano plots from GSE14520 and GSE83148
-- Three-set Venn diagram intersection
-- Hub gene expression patterns
-
-### Figure 3: Prognostic Risk Model
-![Prognostic Model](plots/publication/Figure3_prognostic_model.png)
-- Kaplan-Meier survival curves (p=3.1×10⁻⁸)
-- Time-dependent ROC curves (1/3/5-year AUC)
-- Risk score distribution and model coefficients
-
-### Figure 4: Clinical Utility Assessment
-![Clinical Utility](plots/publication/Figure4_clinical_utility.png)
-- Univariate & multivariate Cox forest plots
-- DCA (Decision Curve Analysis)
-- C-index comparison
-
-### Figure 5: Immune Microenvironment Analysis
-![Immune Analysis](plots/publication/Figure5_immune_analysis.png)
-- MDSC infiltration correlation (r=0.48, p<1×10⁻¹³)
-- Immune checkpoint expression patterns
-- M2 macrophage enrichment
-
-### Figure 6: Drug Sensitivity & Molecular Docking
-![Drug & Docking](plots/publication/Figure6_drug_docking.png)
-- Drug response prediction (Sorafenib, 5-FU)
-- Molecular docking heatmap (3 proteins × 6 compounds)
-- Best bindings: ACSL4-Scoparone (ipTM=0.833)
+**Key Results Summary:**
+- **Figure 1:** Comprehensive research workflow (5 analytical modules)
+- **Figure 2:** DEG analysis (Volcano plots + Venn intersection) → 3 Hub genes
+- **Figure 3:** Prognostic model (KM curves, ROC, Risk scores)
+- **Figure 4:** Clinical utility (Cox regression, DCA, C-index)
+- **Figure 5:** Immune microenvironment (MDSC r=0.48, checkpoint analysis)
+- **Figure 6:** Drug sensitivity & molecular docking (18 protein-ligand pairs)
 
 ---
 
@@ -157,7 +131,38 @@ Rscript 06_molecular_docking_heatmap.R # Docking results
 
 ---
 
-## 🔬 Molecular Docking Methods
+## � About This Repository
+
+This repository contains the **complete computational pipeline** for the manuscript manuscript (currently under review). It is designed to ensure:
+- **Full reproducibility** of all analyses
+- **Transparency** in methodology and results
+- **Accessibility** for peer reviewers and researchers
+
+### What's Included
+- ✅ All 15 R analysis scripts (complete source code)
+- ✅ Reference data (ferroptosis genes, TCM targets)
+- ✅ Publication-quality figures (PNG, PDF, TIFF 300dpi)
+- ✅ Figure specifications and generation metadata
+- ✅ Detailed statistical results and computational logs
+
+### What's NOT Included
+- ⚠️ Raw datasets are downloaded automatically from public repositories (GEO, TCGA)
+- ⚠️ Large intermediate RDS files are generated during pipeline execution
+
+---
+
+## 🔄 For Reviewers & Reproducibility
+
+To verify all analyses:
+1. Clone this repository
+2. Run `Rscript run_complete_pipeline.R` 
+3. All figures and statistical results will be regenerated
+
+Estimated runtime: 2-4 hours (depending on internet speed and system)
+
+---
+
+## �🔬 Molecular Docking Methods
 
 ### NVIDIA Boltz-2 (AI-based)
 - **Model:** MIT Boltz-2
@@ -171,46 +176,34 @@ Rscript 06_molecular_docking_heatmap.R # Docking results
 
 ---
 
-## 📝 Citation
+## � References & Acknowledgments
 
-If you use this analysis package, please cite:
-```bibtex
-@article{Zheng2025,
-  title={Network pharmacology reveals Artemisia capillaris targets ferroptosis-related genes in hepatocellular carcinoma},
-  author={Zheng, H. and ... },
-  journal={[Journal Name]},
-  year={2025},
-  volume={},
-  pages={},
-  doi={}
-}
-```
+### Key Databases Used
+- **GEO Database:** GSE14520, GSE83148
+- **TCGA:** TCGA-LIHC (external validation)
+- **FerrDb V2:** Ferroptosis gene database
+- **TCMSP:** Traditional Chinese medicine targets
+
+### Computational Tools
+- R packages: tidyverse, ggplot2, survival, WGCNA, ComplexHeatmap
+- Molecular docking: CB-Dock2, NVIDIA Boltz-2
+- Statistical analysis: Univariate/multivariate Cox regression, LASSO-Cox, SSGSEA
 
 ---
 
 ## ⚠️ Important Notes
 
-- **Data access:** Raw data is automatically downloaded from public databases (GEO, TCGA)
-- **Reproducibility:** All analyses are fully reproducible with version-controlled R scripts
-- **Figure quality:** Generated figures meet publication standards (300 dpi TIFF, PDF, PNG formats)
-- **Transparency:** Figure 1 workflow was AI-assisted visualization; scientific design is author-conceived
+- **Manuscript Status:** Under review (not yet published)
+- **Data Access:** Raw data automatically downloaded from public repositories during execution
+- **Reproducibility:** All analyses are fully version-controlled and reproducible
+- **Code Quality:** Production-ready R scripts with error handling and logging
+- **Figure 1:** AI-assisted visualization (workflow diagram); scientific design and analysis entirely author-designed
 
 ---
 
-## 📧 Contact & Support
+## 📧 Support
 
-For questions or issues with reproduction:
+For technical questions about reproduction:
 - Check individual script headers for specific dependencies
-- Review `plots/publication/README_figures.md` for figure specifications
-- Verify internet connection for GEO/TCGA data download
-
----
-
-## 📄 License
-
-This analysis package is provided for reproducibility and peer review purposes.
-
----
-
-**Generated:** 2025-10-10  
-**Last Updated:** 2025-12-14
+- Review `plots/publication/README_figures.md` for detailed figure specifications
+- Verify internet connection for public database downloads
