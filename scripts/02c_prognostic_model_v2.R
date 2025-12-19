@@ -4,7 +4,7 @@
 # 预后模型构建 V2 - 扩大候选基因范围
 # 策略: WGCNA关键模块基因 ∩ 铁死亡基因 + 单因素Cox筛选
 # 
-# 使用方法: Rscript scripts_final/02c_prognostic_model_v2.R
+# 使用方法: Rscript scripts/02c_prognostic_model_v2.R
 
 options(device = pdf)
 graphics.off()

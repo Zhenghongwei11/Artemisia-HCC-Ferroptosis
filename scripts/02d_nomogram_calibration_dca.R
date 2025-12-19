@@ -5,7 +5,7 @@
 # 整合Risk Score与临床变量，构建综合预后模型
 # 
 # 适用于SCI 1-2区论文投稿标准
-# 使用方法: Rscript scripts_final/02d_nomogram_calibration_dca.R
+# 使用方法: Rscript scripts/02d_nomogram_calibration_dca.R
 
 options(device = pdf)
 graphics.off()

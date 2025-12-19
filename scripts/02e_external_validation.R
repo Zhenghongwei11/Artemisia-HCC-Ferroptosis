@@ -2,9 +2,9 @@
 
 # 02e_external_validation.R
 # 外部验证 - 使用TCGA-LIHC队列验证预后模型
-# 使用方法: Rscript scripts_final/02e_external_validation.R
+# 使用方法: Rscript scripts/02e_external_validation.R
 # 
-# 输入: prognostic_model_coef.csv
+# 输入: results/prognostic_model_coef_v2.csv
 # 输出: TCGA验证结果
 
 # 禁用交互式图形设备 (防止XQuartz弹出)
@@ -38,17 +38,14 @@ message("[外部验证] 开始TCGA-LIHC外部验证...")
 # ============================================
 message("[外部验证] 加载模型系数...")
 
-coef_file <- file.path(res_dir, "prognostic_model_coef.csv")
+coef_file <- file.path(res_dir, "prognostic_model_coef_v2.csv")
 if (!file.exists(coef_file)) {
-  message("[外部验证] ⚠️ 未找到模型系数文件")
-  message("[外部验证] 使用核心基因均值作为Risk Score")
-  
-  core_genes <- read.csv(file.path(res_dir, "diagnostic_core_genes_CHB.csv"))$Gene
-  model_coef <- data.frame(Gene = core_genes, Coefficient = rep(1, length(core_genes)))
-} else {
-  model_coef <- read.csv(coef_file)
+  message("[外部验证] 未找到模型系数文件: ", coef_file)
+  message("[外部验证] 请先运行 scripts/02c_prognostic_model_v2.R 生成该文件，或使用本包提供的结果表。")
+  quit(save = "no", status = 1)
 }
 
+model_coef <- read.csv(coef_file)
 message("[外部验证] 模型基因数: ", nrow(model_coef))
 
 # ============================================
@@ -77,12 +74,22 @@ if (!file.exists(tcga_expr_file) || !file.exists(tcga_clin_file)) {
     # 准备数据
     data <- GDCprepare(query)
     
-    # 提取表达矩阵
-    expr_mat <- assay(data, "tpm_unstrand")
+    # 提取表达矩阵（不同版本的TCGAbiolinks可能使用不同assay名称）
+    assays <- assayNames(data)
+    preferred <- c("tpm_unstrand", "tpm_unstranded", "HTSeq - Counts")
+    use_assay <- intersect(preferred, assays)
+    if (length(use_assay) == 0) use_assay <- assays[1]
+    expr_mat <- assay(data, use_assay[1])
     
     # 转换基因ID为Symbol
     gene_info <- rowData(data)
-    rownames(expr_mat) <- gene_info$gene_name
+    if ("gene_name" %in% colnames(gene_info)) {
+      rownames(expr_mat) <- gene_info$gene_name
+    } else if ("external_gene_name" %in% colnames(gene_info)) {
+      rownames(expr_mat) <- gene_info$external_gene_name
+    } else if ("gene_id" %in% colnames(gene_info)) {
+      rownames(expr_mat) <- gene_info$gene_id
+    }
     
     # 去重
     expr_mat <- expr_mat[!duplicated(rownames(expr_mat)), ]
@@ -97,10 +104,12 @@ if (!file.exists(tcga_expr_file) || !file.exists(tcga_clin_file)) {
     message("[外部验证] TCGA数据下载完成")
     
   }, error = function(e) {
-    message("[外部验证] ⚠️ TCGA下载失败: ", e$message)
-    message("[外部验证] 请检查网络连接或手动下载数据")
-    message("[外部验证] 跳过外部验证...")
-    quit(save = "no", status = 0)
+    message("[外部验证] TCGA下载失败: ", e$message)
+    message("[外部验证] 如果希望执行该步骤，请手动准备并放置以下文件：")
+    message("  - ", tcga_expr_file)
+    message("  - ", tcga_clin_file)
+    message("[外部验证] 详见 docs/DATA_MANIFEST.md (TCGA-LIHC 外部验证部分)。")
+    quit(save = "no", status = 1)
   })
 }
 
@@ -127,8 +136,8 @@ available_genes <- intersect(model_coef$Gene, rownames(tcga_expr_tumor))
 message("[外部验证] 可用模型基因: ", length(available_genes), "/", nrow(model_coef))
 
 if (length(available_genes) < 2) {
-  message("[外部验证] ⚠️ 可用基因过少，无法进行验证")
-  quit(save = "no", status = 0)
+  message("[外部验证] 可用基因过少，无法进行验证")
+  quit(save = "no", status = 1)
 }
 
 # 提取表达矩阵
@@ -224,7 +233,12 @@ legend("topright", legend = c("Low Risk", "High Risk"),
 
 # B: Risk Score分布比较
 # 加载训练集数据
-train_risk <- read.csv(file.path(res_dir, "risk_score_data.csv"))
+train_risk_file <- file.path(res_dir, "risk_score_data_v2.csv")
+if (!file.exists(train_risk_file)) {
+  message("[外部验证] 缺少训练集 risk score 文件: ", train_risk_file)
+  quit(save = "no", status = 1)
+}
+train_risk <- read.csv(train_risk_file)
 
 boxplot(list(Training = train_risk$risk_score, Validation = valid_data$risk_score),
         col = c("steelblue", "coral"),

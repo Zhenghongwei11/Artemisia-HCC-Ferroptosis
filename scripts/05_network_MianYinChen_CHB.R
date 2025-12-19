@@ -2,7 +2,7 @@
 
 # 05_network_MianYinChen_CHB.R
 # 绵茵陈网络药理与 CHB 铁死亡/免疫核心基因的整合分析
-# 使用方法: Rscript scripts_final/05_network_MianYinChen_CHB.R
+# 使用方法: Rscript scripts/05_network_MianYinChen_CHB.R
 
 # 禁用交互式图形设备 (防止XQuartz弹出)
 options(device = pdf)

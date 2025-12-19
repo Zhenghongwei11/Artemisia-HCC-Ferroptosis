@@ -8,7 +8,8 @@ options(device = pdf)
 graphics.off()
 Sys.setenv(DISPLAY = "")
 
-options(repos = c(CRAN = "https://mirrors.tuna.tsinghua.edu.cn/CRAN/"))
+cran_repo <- Sys.getenv("CRAN_REPO", unset = "https://cloud.r-project.org")
+options(repos = c(CRAN = cran_repo))
 
 if (!require("BiocManager", quietly = TRUE)) {
   install.packages("BiocManager")
@@ -21,6 +22,12 @@ base_pkgs <- c(
   # GEO 数据与批量转录组
   "GEOquery", "limma", "edgeR", "sva",
   
+  # 生存分析 / 临床模型 / 可视化
+  "survival", "survminer", "rms", "timeROC", "gridExtra",
+
+  # 注释数据库与映射
+  "AnnotationDbi", "hgu133plus2.db",
+
   # WGCNA 与机器学习
   "WGCNA", "caret", "randomForest", "glmnet", "pROC",
   
@@ -29,6 +36,12 @@ base_pkgs <- c(
   
   # 单细胞 & 细胞通讯
   "Seurat", "patchwork", "monocle", "Matrix",
+
+  # 外部验证（TCGA）
+  "TCGAbiolinks", "SummarizedExperiment",
+
+  # DCA / 日志等（部分脚本使用）
+  "ggDCA", "futile.logger",
   
   # 热图等
   "ComplexHeatmap"

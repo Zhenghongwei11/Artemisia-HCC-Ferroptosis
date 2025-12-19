@@ -17,8 +17,26 @@ suppressPackageStartupMessages({
   library(cowplot)
 })
 
+detect_base_dir <- function() {
+  candidates <- c(".", "fx_review_package")
+  for (d in candidates) {
+    if (dir.exists(file.path(d, "results")) &&
+        dir.exists(file.path(d, "plots")) &&
+        dir.exists(file.path(d, "data/processed")) &&
+        dir.exists(file.path(d, "data/references"))) {
+      return(d)
+    }
+  }
+  stop(
+    "Cannot locate fx_review_package base directory.\n",
+    "Run either:\n",
+    "  1) from fx_review_package/ directory, or\n",
+    "  2) from its parent directory (so fx_review_package/ is a subfolder).\n"
+  )
+}
+
 # 目录设置
-base_dir <- "MianYinChen_Project"
+base_dir <- detect_base_dir()
 res_dir <- file.path(base_dir, "results")
 proc_dir <- file.path(base_dir, "data/processed")
 ref_dir <- file.path(base_dir, "data/references") # For gene lists

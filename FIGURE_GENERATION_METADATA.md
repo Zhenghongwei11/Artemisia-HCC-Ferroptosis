@@ -6,6 +6,8 @@
 **Date:** 2024-12-06
 **Purpose:** To visualize the study design and workflow for the manuscript.
 
+Note: the date above records when the prompt text was drafted. The `plots/publication/figure1.jpeg` file included in this package may be regenerated later using the same prompt.
+
 ### Prompt Used:
 ```
 Please generate a publication-quality research flowchart for an SCI journal article.

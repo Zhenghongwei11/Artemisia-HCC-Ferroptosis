@@ -1,10 +1,13 @@
 # Large data files
 data/raw/**
 data/processed/**
+!data/processed/GSE14520_tumor_clinical.rds
 results/*.rds
 results/*.RDS
 plots/**
 !plots/
+!plots/publication/
+!plots/publication/**
 
 # R environment
 .RData

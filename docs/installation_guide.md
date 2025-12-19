@@ -3,7 +3,7 @@
 ## Prerequisites
 
 - R (version >= 4.0)
-- Internet access for downloading packages and data
+- Internet access is recommended for installing packages (data downloads are not fully automated in this package)
 
 ## Installation
 
@@ -15,7 +15,7 @@
 
 ## Environment Setup
 
-The analysis pipeline will automatically install required R packages. You can also install them manually by running:
+Install required R packages by running:
 ```R
 # Start R/RStudio
 R
@@ -32,32 +32,25 @@ Rscript run_complete_pipeline.R
 
 ## What the Pipeline Does
 
-1. **Environment Setup**: Installs required R packages
-2. **Data Download**: Downloads GSE14520 and GSE83148 data from GEO database
-3. **Batch Correction**: Combines and corrects for batch effects
-4. **Differential Expression**: Identifies DEGs between conditions
-5. **Ferroptosis Analysis**: Identifies ferroptosis-related genes
-6. **Prognostic Model**: Builds a 15-gene ferroptosis-based prognostic model
-7. **Immune Analysis**: Analyzes immune infiltration patterns
-8. **Network Pharmacology**: Identifies intersection with TCM targets
-9. **Molecular Docking**: Performs computational docking validation
-10. **Figure Generation**: Creates publication-ready figures
+This entry script regenerates Figures 2–6 from the curated result tables in `results/`.
+
+If you want to re-run upstream analyses from public raw data, follow:
+- `docs/DATA_MANIFEST.md`
+- `docs/REPRODUCIBILITY.md`
 
 ## Expected Runtime
 
-The complete analysis can take several hours to complete depending on your system specifications and internet connection speed, as it involves:
-- Downloading large datasets from GEO
-- Running computationally intensive analyses (WGCNA, ML algorithms)
-- Performing molecular docking calculations
+Regenerating Figures 2–6 from included results typically completes in minutes.
+
+A full re-run from public raw data may take several hours and requires manual downloads (and, for some steps, external services).
 
 ## Output Files
 
-- Processed data: `data/processed/`
-- Analysis results: `results/`
+- Results (inputs to figure regeneration): `results/`
 - Figures: `plots/publication/`
+- Optional raw/processed inputs (if re-running upstream): `data/raw/`, `data/processed/`
 
 ## Troubleshooting
 
-- If R package installation fails, ensure you have internet access and try installing packages individually
-- Large data downloads may take time; be patient during the initial steps
-- If memory errors occur, ensure your system has sufficient RAM (16GB+ recommended)
+- If package installation fails, ensure you have internet access and try installing packages individually.
+- If you attempt a full re-run and a required file is missing, check `docs/DATA_MANIFEST.md` for the exact filename and placement path.

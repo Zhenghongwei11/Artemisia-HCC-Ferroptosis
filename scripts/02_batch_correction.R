@@ -18,9 +18,9 @@ suppressPackageStartupMessages({
 })
 
 # 设置工作目录（支持命令行和RStudio）
-# 使用方法: cd MianYinChen_Project && Rscript scripts_final/02_batch_correction.R
+# 使用方法: cd fx_review_package && Rscript scripts/02_batch_correction.R
 if (!dir.exists("data/processed")) {
-  stop("错误: 请在项目根目录(MianYinChen_Project)运行此脚本\n使用方法: cd MianYinChen_Project && Rscript scripts_final/02_batch_correction.R")
+  stop("错误: 请在项目根目录(fx_review_package)运行此脚本\n使用方法: cd fx_review_package && Rscript scripts/02_batch_correction.R")
 }
 
 proc_dir <- "data/processed"
@@ -136,4 +136,3 @@ message("[批次校正] 输出文件:")
 message("  ✅ ", file.path(proc_dir, "combined_expr_batch_corrected.rds"))
 message("  ✅ ", file.path(plot_dir, "batch_correction_check.pdf"))
 message("  ✅ results/batch_correction_report.csv")
-

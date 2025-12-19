@@ -3,7 +3,7 @@
 # 02c_ml_feature_selection.R
 # 机器学习特征筛选 - 主控脚本
 # 协调预筛选和主分析两个阶段
-# 使用方法: Rscript scripts_final/02c_ml_feature_selection.R
+# 使用方法: Rscript scripts/02c_ml_feature_selection.R
 
 message("========================================")
 message("机器学习特征筛选 - 完整流程")
@@ -11,7 +11,7 @@ message("========================================")
 
 # 第一阶段：预筛选
 message("\n[阶段1] 预筛选 - 单变量分析...")
-source("scripts_final/02c_ml_feature_selection_prefilter.R")
+source("scripts/02c_ml_feature_selection_prefilter.R")
 
 # 检查预筛选结果
 if (!file.exists("results/ml_candidate_genes_top50.csv")) {
@@ -22,7 +22,7 @@ message("\n[检查] 预筛选结果文件已生成 ✓")
 
 # 第二阶段：主分析
 message("\n[阶段2] 主分析 - SVM-RFE/RF/LASSO...")
-source("scripts_final/02c_ml_feature_selection_main.R")
+source("scripts/02c_ml_feature_selection_main.R")
 
 # 检查主分析结果
 if (!file.exists("results/diagnostic_core_genes_CHB.csv")) {
@@ -38,4 +38,3 @@ message("✅ 机器学习特征筛选完成！")
 message("核心基因数: ", length(core_genes))
 message("输出文件: results/diagnostic_core_genes_CHB.csv")
 message("========================================")
-

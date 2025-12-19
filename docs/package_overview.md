@@ -35,11 +35,9 @@ The analysis uses data from public repositories:
 
 ## Important Notes
 - This package contains analysis scripts and reference data only
-- Raw data is downloaded from public databases during execution (this will be the first step)
-- Large intermediate and result files are generated during execution
-- Final figures are saved to the `plots/publication/` directory
-- The complete analysis can take several hours to run
-- All scripts use relative paths for reproducibility
+- Figures 2–6 are regenerated from curated result tables included under `results/`.
+- Raw datasets are not redistributed here; some upstream steps require manual downloads and file placement (see `docs/DATA_MANIFEST.md`).
+- Final figures are saved to `plots/publication/`.
 
 ## Contents
 - All analysis scripts (WGCNA, ML, survival analysis, immune infiltration, network pharmacology, molecular docking)
@@ -47,4 +45,4 @@ The analysis uses data from public repositories:
 - Pipeline script to execute the complete analysis
 - Documentation for installation and usage
 
-This package allows full reproduction of the analytical methods described in the manuscript.
+This package regenerates Figures 2–6 from curated result tables and documents the manual inputs needed for an optional full re-run from public sources.

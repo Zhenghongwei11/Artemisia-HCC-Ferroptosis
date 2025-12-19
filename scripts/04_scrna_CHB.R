@@ -5,7 +5,7 @@
 # 
 # ⚠️ 注意：此脚本为可选分析，需要大量内存（建议16GB+）
 # 如果内存不足，可以跳过此脚本
-# 使用方法: Rscript scripts_final/04_scrna_CHB.R
+# 使用方法: Rscript scripts/04_scrna_CHB.R
 
 # 禁用交互式图形设备 (防止XQuartz弹出)
 options(device = pdf)

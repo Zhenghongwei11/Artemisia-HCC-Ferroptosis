@@ -3,7 +3,11 @@
 # 05c_drug_sensitivity_v2.R
 # 药物敏感性分析 - 基于Ridge回归的自定义实现
 # 参考oncoPredict/pRRophetic方法
-# 使用方法: Rscript scripts_final/05c_drug_sensitivity_v2.R
+# 使用方法: Rscript scripts/05c_drug_sensitivity_v2.R
+#
+# 说明：
+# - 该步骤需要本地准备 GDSC2 训练数据（本包不分发，见 docs/DATA_MANIFEST.md）
+# - 该步骤需要表达矩阵（GSE14520）已整理为 symbol 层级的 RDS
 
 options(device = pdf)
 graphics.off()
@@ -31,14 +35,35 @@ message("[药物敏感性V2] 开始药物敏感性分析...")
 message("[药物敏感性V2] 加载数据...")
 
 # 表达矩阵
-expr_14 <- readRDS(file.path(proc_dir, "GSE14520_expr_symbol.rds"))
+expr_file <- file.path(proc_dir, "GSE14520_expr_symbol.rds")
+if (!file.exists(expr_file)) {
+  message("[药物敏感性V2] 缺少输入文件: ", expr_file)
+  message("[药物敏感性V2] 请先生成/放置该文件，或参考 docs/DATA_MANIFEST.md 的路径约定。")
+  quit(save = "no", status = 1)
+}
+expr_14 <- readRDS(expr_file)
 
 # GDSC数据
-GDSC2_Expr <- readRDS(file.path(ref_dir, "GDSC/GDSC2_Expr.rds"))
-GDSC2_Res <- readRDS(file.path(ref_dir, "GDSC/GDSC2_Res.rds"))
+gdsc_expr_file <- file.path(ref_dir, "GDSC/GDSC2_Expr.rds")
+gdsc_res_file <- file.path(ref_dir, "GDSC/GDSC2_Res.rds")
+if (!file.exists(gdsc_expr_file) || !file.exists(gdsc_res_file)) {
+  message("[药物敏感性V2] 缺少 GDSC2 训练数据：")
+  message("  - ", gdsc_expr_file)
+  message("  - ", gdsc_res_file)
+  message("[药物敏感性V2] 本包不分发该数据，请参考 docs/DATA_MANIFEST.md 手动下载并放置。")
+  quit(save = "no", status = 1)
+}
+GDSC2_Expr <- readRDS(gdsc_expr_file)
+GDSC2_Res <- readRDS(gdsc_res_file)
 
 # Risk Score数据
-risk_data <- read.csv(file.path(res_dir, "risk_score_data.csv"))
+risk_file <- file.path(res_dir, "risk_score_data_v2.csv")
+if (!file.exists(risk_file)) {
+  message("[药物敏感性V2] 缺少输入文件: ", risk_file)
+  message("[药物敏感性V2] 该文件由 02c_prognostic_model_v2.R 生成，或使用本包提供的结果表。")
+  quit(save = "no", status = 1)
+}
+risk_data <- read.csv(risk_file)
 
 message("[药物敏感性V2] GSE14520: ", nrow(expr_14), " x ", ncol(expr_14))
 message("[药物敏感性V2] GDSC2表达: ", nrow(GDSC2_Expr), " x ", ncol(GDSC2_Expr))
